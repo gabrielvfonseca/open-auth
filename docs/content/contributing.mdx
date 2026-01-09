@@ -1,0 +1,66 @@
+---
+title: Contributing
+description: How to modify and extend the open-auth codebase.
+---
+
+# Contributing to open-auth
+
+As an open-source project, we welcome contributions! This guide will help you set up your development environment and understand the monorepo structure.
+
+## Development Setup
+
+We use **Bun** and **Turbo** to manage our monorepo.
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/gabrielvfonseca/open-auth.git
+   cd open-auth
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   bun install
+   ```
+
+3. **Set up your environment**:
+   Copy `.env.example` to `.env` and configure your database.
+
+4. **Run development server**:
+   ```bash
+   bun run dev
+   ```
+
+## Essential Scripts
+
+- `bun run build`: Builds all packages using Turbo.
+- `bun run test`: Runs the test suite across the monorepo.
+- `bun run lint`: Checks for linting errors using Biome.
+- `bun run format`: Automatically formats the code.
+
+## Monorepo Structure
+
+- `packages/auth`: The main client package (Facade).
+- `packages/[domain]`: Specialized packages (Session, MFA, Passkey, etc.).
+- `apps/docs`: This documentation site.
+- `examples/*`: Framework-specific implementations.
+
+## How to Modify the Source Code
+
+### Adding a Feature to the Client
+If you want to add a high-level API:
+1. Identify the relevant domain package (e.g., `packages/session`).
+2. Implement the logic in the domain package.
+3. Update `packages/auth/src/client.ts` to expose the new functionality via the `AuthClient`.
+
+### Creating a New Domain Package
+1. Use our template or copy an existing simple package like `packages/core`.
+2. Ensure it has a `src/index.ts` and proper exports.
+3. Add it to the `workspaces` in the root `package.json`.
+4. Link it to `packages/auth` if it needs to be part of the unified API.
+
+## Code Standards
+
+We use **Biome** for formatting and linting. Please ensure yours pass before submitting a PR.
+- No `any` types where possible.
+- Use `server-only` for server-side logic.
+- Prefer `@open-auth/core` shared utilities.

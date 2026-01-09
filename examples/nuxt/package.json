@@ -1,0 +1,32 @@
+{
+  "name": "@open-auth/example-nuxt",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open Auth example for Nuxt",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "examples/nuxt"
+  },
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/examples/nuxt#readme",
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "open-auth": "workspace:*",
+    "@open-auth/session": "workspace:*",
+    "nuxt": "^3.11.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.3"
+  }
+}

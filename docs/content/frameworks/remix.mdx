@@ -1,0 +1,48 @@
+---
+title: Remix
+description: Integrate open-auth with your Remix application.
+---
+
+# Remix Integration
+
+Remix uses loaders and actions to handle data. `open-auth` integrates naturally with these patterns.
+
+## Installation
+
+```bash
+bun add open-auth
+```
+
+## Session Retrieval
+
+In your loaders or actions:
+
+```typescript
+import { json, type LoaderFunctionArgs } from "@remix-run/node";
+import { auth } from "open-auth";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+	const cookieHeader = request.headers.get("Cookie");
+	const sessionId = auth.session.readSessionToken(cookieHeader ?? "");
+    
+	if (!sessionId) {
+		return json({ user: null });
+	}
+
+	const { session, user } = await auth.validateSessionToken(sessionId);
+	if (session) {
+		return json({ user });
+	}
+    
+	return json({ user: null });
+}
+```
+
+## Action handling
+
+```typescript
+export async function action({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  // ... handle login
+}
+```

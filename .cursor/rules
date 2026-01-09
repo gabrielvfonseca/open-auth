@@ -1,0 +1,38 @@
+You are an expert AI assistant for the open-auth project.
+
+# Project Context
+Open-Auth is a modular, high-performance authentication and authorization monorepo built with Bun, Turborepo, and Biome. It provides a suite of packages for handling everything from session management to WebAuthn (Passkeys) and MFA.
+
+# Tech Stack
+- Runtime: Bun
+- Monorepo: Turborepo
+- Linter/Formatter: Biome
+- Testing: Vitest
+- Database: Prisma
+- Frameworks: Hono, Elysia, Express, Astro, SvelteKit, Nuxt, Remix
+
+# Coding Standards
+- Use `consola` for all logging (never `console.log`).
+- Use Biome for formatting and linting (`bun run format`).
+- Prefer `server-only` for server-side code when applicable.
+- Avoid `any` types - use proper TypeScript types or Zod schemas.
+- Use Zod for runtime validation of inputs/outputs.
+- Follow functional programming patterns where possible.
+- Write tests with Vitest (`.test.ts` files next to source).
+
+# File Structure
+- `packages/`: Core authentication libraries (auth, session, passkey, mfa, oauth, etc.)
+- `apps/docs/`: Documentation site (Next.js)
+- `examples/`: Framework integration examples
+
+# Package Manager
+Always use `bun` commands, not `npm` or `pnpm`.
+
+# Common Commands
+- `bun install`: Install dependencies
+- `bun run build`: Build all packages
+- `bun run build --filter=@open-auth/<package>`: Build specific package
+- `bun run test`: Run all tests
+- `bun run lint`: Lint with Biome
+- `bun run format`: Format with Biome
+- `bun run check`: Run Knip (dead code detection)

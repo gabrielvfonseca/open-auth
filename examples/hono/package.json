@@ -1,0 +1,29 @@
+{
+  "name": "@open-auth/example-hono",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open Auth example for Hono",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "examples/hono"
+  },
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/examples/hono#readme",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "start": "bun run dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "open-auth": "workspace:*",
+    "@open-auth/session": "workspace:*",
+    "hono": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,30 @@
+# Open Auth Monorepo Rules
+
+## Project Overview
+Open-Auth is a modular, high-performance authentication and authorization monorepo built with Bun, Turborepo, and Biome. It provides a suite of packages for handling everything from session management to WebAuthn (Passkeys) and MFA.
+
+## Tech Stack
+- **Runtime**: Bun
+- **Monorepo Tooling**: Turborepo
+- **Linter/Formatter**: Biome
+- **Testing**: Vitest
+- **Database**: Prisma (PostgreSQL / SQLite / MySQL)
+- **Frameworks**: Hono, Elysia, Express, Astro, SvelteKit, Nuxt, Remix
+
+## Coding Standards
+- **Functional First**: Prefer pure functions and immutability.
+- **Strict Typing**: Use TypeScript's strictest settings. Avoid `any` at all costs.
+- **Validation**: Use Zod for all input/output validation.
+- **Naming**: Use camelCase for variables/functions, PascalCase for classes/types, and kebab-case for files.
+- **Imports**: Use ESM. Prefer absolute imports (workspace:*) for internal packages.
+
+## Monorepo Structure
+- `packages/*`: Domain-specific authentication libraries.
+- `apps/*`: Documentation and dashboards.
+- `examples/*`: Framework-specific integration demonstrations.
+
+## Common Commands
+- `bun run build`: Build all packages.
+- `bun run lint`: Lint with Biome.
+- `bun run test`: Run all tests.
+- `bun run check`: Run Knip to find dead code.

@@ -1,0 +1,53 @@
+---
+title: Elysia
+description: Integrate open-auth with your Elysia application.
+---
+
+# Elysia Integration
+
+Learn how to use `open-auth` with Elysia using the `.derive` pattern for session handling.
+
+## Installation
+
+```bash
+bun add open-auth elysia
+```
+
+## Setup
+
+```typescript
+// src/index.ts
+import { Elysia } from "elysia";
+import { auth } from "open-auth";
+
+const app = new Elysia()
+    .derive(async ({ cookie: { [auth.session.cookieName]: sessionId } }) => {
+        if (!sessionId?.value) {
+            return { user: null, session: null };
+        }
+        const { user, session } = await auth.validateSessionToken(sessionId.value);
+        if(!session){
+             return { user: null, session: null };
+        }
+        return { user, session };
+    })
+    .get("/", ({ user }) => ({
+        message: "Welcome",
+        user: user || "Guest"
+    }))
+    .listen(3000);
+```
+
+## Middleware
+
+You can also create a reusable plugin for authentication.
+
+```typescript
+import { Elysia } from 'elysia';
+import { auth } from 'open-auth';
+
+export const authPlugin = new Elysia({ name: 'auth' })
+    .derive(async ({ cookie: { [auth.session.cookieName]: sessionId } }) => {
+        // ... validation logic
+    });
+```

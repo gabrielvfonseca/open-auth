@@ -1,0 +1,41 @@
+---
+title: Multi-Factor Authentication
+description: Secure your accounts with TOTP-based Multi-Factor Authentication.
+---
+
+# Multi-Factor Authentication (MFA)
+
+open-auth includes built-in support for time-based one-time passwords (TOTP), compatible with apps like Google Authenticator or 1Password.
+
+## Setup Flow
+
+1. **Generation**: The server generates a TOTP secret and a setup URL (typically displayed as a QR code).
+2. **Verification**: The user enters the code from their app to verify the setup.
+3. **Activation**: The MFA is marked as active for the user.
+
+## Implementation
+
+### 1. Generate Secret
+
+```typescript
+const { secret, keyuri } = await auth.mfa.generateTOTPSecret(user.id);
+```
+
+### 2. Verify and Enable
+
+```typescript
+const isValid = await auth.mfa.verifyTOTP(secret, userEnteredCode);
+if (isValid) {
+  await auth.user.setUserMFA(user.id, true);
+}
+```
+
+## Secondary Verification
+
+When MFA is enabled, `auth.getCurrentSession()` will return a session where `twoFactorVerified` might be `false`. You should check this in your middleware to restrict access to sensitive routes.
+
+```typescript
+if (session && !session.twoFactorVerified) {
+  redirect('/2fa/verify');
+}
+```

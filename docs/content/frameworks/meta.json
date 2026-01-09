@@ -1,0 +1,13 @@
+{
+  "title": "Frameworks",
+  "pages": [
+    "nextjs",
+    "nuxt",
+    "remix",
+    "astro",
+    "svelte",
+    "hono",
+    "express",
+    "elysia"
+  ]
+}

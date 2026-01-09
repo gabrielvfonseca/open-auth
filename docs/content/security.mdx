@@ -1,0 +1,38 @@
+---
+title: Security & Guardian
+description: Protect your application against brute-force and credential stuffing.
+---
+
+# Security & Guardian
+
+The Guardian package provides essential security layers to protect your application from automated attacks.
+
+## Rate Limiting
+
+open-auth automatically tracks failed attempts and applies rate limits based on IP and user identifier.
+
+- **Login Attempts**: Limits how many times a user can try to sign in within a timeframe.
+- **Password Resets**: Prevents spamming of reset emails.
+- **Email Verification**: Throttles verification attempts.
+
+## Account Lockout
+
+After a certain number of failed attempts, an account may be temporarily locked.
+
+```typescript
+const status = await auth.guardian.checkStatus(identifier);
+if (status.locked) {
+  return { error: "Account temporarily locked" };
+}
+```
+
+## Global Security Policies
+
+You can configure global policies for:
+- Minimum password strength.
+- Session timeout durations.
+- Maximum concurrent sessions.
+
+## Security Headers
+
+We recommend serving your documentation and application with headers like `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, and `Content-Security-Policy`.

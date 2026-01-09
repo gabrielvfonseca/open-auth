@@ -1,0 +1,41 @@
+---
+title: Installation
+description: How to install and set up open-auth in your project.
+---
+
+# Installation
+
+To get started with open-auth, you need to install the core package.
+
+## Package Manager
+
+You can install `open-auth` using your favorite package manager:
+
+```bash
+bun add open-auth
+# or
+npm install open-auth
+# or
+pnpm add open-auth
+```
+
+## Prerequisites
+
+- **Node.js**: v20 or higher.
+- **Bun**: (Optional but recommended) v1.0 or higher.
+- **Database**: PostgreSQL (recommended) or any database supported by Prisma.
+
+## Environment Setup
+
+open-auth requires several environment variables for security and connectivity. Create a `.env` file in your root directory:
+
+```bash
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/open_auth"
+
+# Security
+ENCRYPTION_KEY="your-encryption-key-base64"
+```
+
+> [!TIP]
+> You can generate a secure encryption key using `openssl rand -base64 32`.

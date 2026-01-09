@@ -1,0 +1,56 @@
+{
+  "name": "@open-auth/example-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open Auth example for Next.js",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "examples/nextjs"
+  },
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/examples/nextjs#readme",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "open-auth": "workspace:*",
+    "@open-auth/core": "workspace:*",
+    "@open-auth/guardian": "workspace:*",
+    "@open-auth/magic": "workspace:*",
+    "@open-auth/mfa": "workspace:*",
+    "@open-auth/passkey": "workspace:*",
+    "@open-auth/session": "workspace:*",
+    "@open-auth/oauth": "workspace:*",
+    "@open-auth/sso": "workspace:*",
+    "arctic": "^3.7.0",
+    "@node-rs/argon2": "^2.0.0",
+    "@oslojs/otp": "^1.1.0",
+    "clsx": "^2.1.0",
+    "next": "14.2.14",
+    "qrcode": "^1.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^2.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
+    "@types/node": "^20.0.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.14",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.0.0"
+  }
+}

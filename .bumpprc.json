@@ -1,0 +1,8 @@
+{
+  "recursive": true,
+  "commit": "v%s",
+  "tag": "v%s",
+  "push": true,
+  "bundle": false,
+  "files": ["package.json", "packages/*/package.json"]
+}

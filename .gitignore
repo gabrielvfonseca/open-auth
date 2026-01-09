@@ -1,0 +1,12 @@
+node_modules
+.turbo
+dist
+build
+.next
+.nuxt
+.output
+.svelte-kit
+coverage
+.nyc_output
+*.log
+.DS_Store

@@ -1,0 +1,60 @@
+---
+title: Nuxt
+description: Integrate open-auth with your Nuxt application.
+---
+
+# Nuxt Integration
+
+Nuxt 3 provides a powerful server middleware pattern that works perfectly with `open-auth`.
+
+## Installation
+
+```bash
+bun add open-auth
+```
+
+## Middleware Setup
+
+Create a server middleware to handle session validation.
+
+```typescript
+// server/middleware/auth.ts
+import { auth } from "open-auth";
+
+export default defineEventHandler(async (event) => {
+	const sessionId = getCookie(event, auth.session.cookieName);
+	if (!sessionId) {
+		event.context.user = null;
+		event.context.session = null;
+		return;
+	}
+
+	const { session, user } = await auth.validateSessionToken(sessionId);
+	if (session) {
+		setCookie(event, auth.session.cookieName, session.id, {
+			path: "/",
+			httpOnly: true,
+			sameSite: "lax",
+			secure: process.env.NODE_ENV === "production",
+			expires: session.expiresAt
+		});
+		event.context.session = session;
+		event.context.user = user;
+	} else {
+		deleteCookie(event, auth.session.cookieName);
+		event.context.session = null;
+		event.context.user = null;
+	}
+});
+```
+
+## Usage in API Routes
+
+```typescript
+// server/api/me.ts
+export default defineEventHandler((event) => {
+  const user = event.context.user;
+  if (!user) throw createError({ statusCode: 401 });
+  return { user };
+})
+```

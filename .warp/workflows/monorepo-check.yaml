@@ -1,0 +1,8 @@
+name: verify-packages
+command: bun run lint && bun run test
+description: Run linting (Biome) and tests (Vitest) across all packages in the monorepo.
+tags:
+  - verification
+  - quality
+  - monorepo
+  - bun

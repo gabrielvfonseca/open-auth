@@ -1,0 +1,55 @@
+{
+  "name": "@open-auth/identity",
+  "version": "0.1.0",
+  "description": "User and account management service for Open-Auth, linking various authentication methods to a unified identity.",
+  "keywords": [
+    "identity",
+    "user-management",
+    "accounts",
+    "open-auth"
+  ],
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/identity#readme",
+  "bugs": {
+    "url": "https://github.com/gabrielvfonseca/open-auth/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "packages/identity"
+  },
+  "license": "MIT",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.0"
+  },
+  "packageManager": "bun@1.3.3",
+  "scripts": {
+    "build": "bun build.ts",
+    "test": "bun test --pass-with-no-tests",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "type-check": "tsc --noEmit",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "@open-auth/core": "workspace:*",
+    "@open-auth/password": "workspace:*",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^20.0.0"
+  }
+}

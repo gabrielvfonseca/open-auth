@@ -1,0 +1,476 @@
+generator client {
+  provider   = "prisma-client"
+  output     = "../src/generated/prisma"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== AUTHENTICATION SERVICE ====================
+
+// Core user identity for authentication purposes
+model User {
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  username            String
+  emailVerified       Boolean   @default(false) @map("email_verified")
+  recoveryCode        Bytes?    @map("recovery_code")
+  deleted             Boolean   @default(false)
+  deletedAt           DateTime? @map("deleted_at")
+  lockedUntil         DateTime? @map("locked_until")
+  failedLoginAttempts Int       @default(0) @map("failed_login_attempts")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at")
+
+  // Auth-specific relations
+  emailVerifications      EmailVerification[]
+  passkeyCredentials      PasskeyCredential[]
+  passwordResetSessions   PasswordResetSession[]
+  securityKeyCredentials  SecurityKeyCredential[]
+  sessions                Session[]
+  totpCredentials         TotpCredential[]
+  recoveryCodes           RecoveryCode[]
+  passwordHistory         PasswordHistory[]
+  magicLinkTokens         MagicLinkToken[]
+  failedLoginAttemptsList FailedLoginAttempt[]
+  devices                 Device[]
+  accounts                Account[]
+  oauthApplications       OAuthApplication[]
+  oauthAuthorizations     OAuthAuthorization[]
+  oauthCodes              OAuthAuthorizationCode[]
+  oauthTokens             OAuthToken[]
+  oauthRefreshTokens      OAuthRefreshToken[]
+
+  // RBAC Relations
+  organizations           OrganizationMember[]
+
+  @@index([email])
+  @@index([deleted])
+  @@map("user")
+}
+
+// ==================== RBAC & ORGANIZATION MODELS ====================
+
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  members     OrganizationMember[]
+  roles       Role[]
+  oauthApplications OAuthApplication[]
+
+  @@map("organization")
+}
+
+model OrganizationMember {
+  id             String       @id @default(cuid())
+  organizationId String       @map("organization_id")
+  userId         String       @map("user_id")
+  roleId         String?      @map("role_id")
+  joinedAt       DateTime     @default(now()) @map("joined_at")
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           Role?        @relation(fields: [roleId], references: [id], onDelete: SetNull)
+
+  @@unique([organizationId, userId])
+  @@map("organization_member")
+}
+
+model Role {
+  id             String       @id @default(cuid())
+  name           String
+  description    String?
+  organizationId String?      @map("organization_id")
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  permissions    RolePermission[]
+  members        OrganizationMember[]
+
+  @@unique([name, organizationId])
+  @@map("role")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+
+  roles       RolePermission[]
+
+  @@map("permission")
+}
+
+model RolePermission {
+  roleId       String @map("role_id")
+  permissionId String @map("permission_id")
+
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permission")
+}
+
+model Session {
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  expiresAt         DateTime @map("expires_at")
+  twoFactorVerified Boolean  @default(false) @map("two_factor_verified")
+  deviceName        String?  @map("device_name")
+  ipAddress         String?  @map("ip_address")
+  userAgent         String?  @map("user_agent")
+  lastActiveAt      DateTime @default(now()) @map("last_active_at")
+  isPersistent      Boolean  @default(false) @map("is_persistent")
+  rememberMe        Boolean  @default(false) @map("remember_me")
+  deviceId          String?  @map("device_id")
+  accountId         String?  @map("account_id")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device            Device?  @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+  account           Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([deviceId])
+  @@index([accountId])
+  @@index([lastActiveAt])
+  @@map("session")
+}
+
+model Account {
+  id                    String                 @id @default(cuid())
+  userId                String                 @map("user_id")
+  type                  String // "email_password", "github", "google", "microsoft", "apple", "magic_link", "saml"
+  providerId            String?                @map("provider_id")
+  email                 String?
+  passwordHash          String?                @map("password_hash")
+  emailVerified         Boolean                @default(false) @map("email_verified")
+  createdAt             DateTime               @default(now()) @map("created_at")
+  lastUsedAt            DateTime?              @map("last_used_at")
+  user                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessions              Session[]
+  emailVerifications    EmailVerification[]
+  passwordResetSessions PasswordResetSession[]
+
+  @@unique([type, providerId])
+  @@unique([type, email])
+  @@index([userId])
+  @@index([type])
+  @@index([providerId])
+  @@index([email])
+  @@map("account")
+}
+
+model EmailVerification {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  accountId String?  @map("account_id")
+  email     String
+  oldEmail  String?  @map("old_email")
+  code      String
+  expiresAt DateTime @map("expires_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account   Account? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId])
+  @@index([code])
+  @@map("email_verification")
+}
+
+model PasswordResetSession {
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  accountId         String?  @map("account_id")
+  email             String
+  code              String
+  expiresAt         DateTime @map("expires_at")
+  emailVerified     Boolean  @default(false) @map("email_verified")
+  twoFactorVerified Boolean  @default(false) @map("two_factor_verified")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account           Account? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId])
+  @@index([code])
+  @@map("password_reset_session")
+}
+
+model TotpCredential {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  key        Bytes
+  name       String?
+  issuer     String?
+  createdAt  DateTime  @default(now()) @map("created_at")
+  lastUsedAt DateTime? @map("last_used_at")
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([lastUsedAt])
+  @@map("totp_credential")
+}
+
+model PasskeyCredential {
+  id         Bytes     @id
+  userId     String    @map("user_id")
+  name       String
+  algorithm  Int
+  publicKey  Bytes     @map("public_key")
+  deviceType String?   @map("device_type")
+  userAgent  String?   @map("user_agent")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  lastUsedAt DateTime? @map("last_used_at")
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([lastUsedAt])
+  @@map("passkey_credential")
+}
+
+model SecurityKeyCredential {
+  id        Bytes  @id
+  userId    String @map("user_id")
+  name      String
+  algorithm Int
+  publicKey Bytes  @map("public_key")
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("security_key_credential")
+}
+
+model RecoveryCode {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  codeHash  String    @map("code_hash")
+  used      Boolean   @default(false)
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([codeHash])
+  @@map("recovery_code")
+}
+
+model PasswordHistory {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("password_history")
+}
+
+model MagicLinkToken {
+  id        String    @id @default(cuid())
+  userId    String?   @map("user_id")
+  email     String
+  tokenHash String    @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  used      Boolean   @default(false)
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  user      User?     @relation(fields: [userId], references: [id])
+
+  @@index([tokenHash])
+  @@index([email])
+  @@index([expiresAt])
+  @@map("magic_link_token")
+}
+
+model FailedLoginAttempt {
+  id          String   @id @default(cuid())
+  userId      String?  @map("user_id")
+  ipAddress   String?  @map("ip_address")
+  attemptedAt DateTime @default(now()) @map("attempted_at")
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([ipAddress])
+  @@index([attemptedAt])
+  @@map("failed_login_attempt")
+}
+
+model Device {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  name        String
+  fingerprint String    @unique
+  userAgent   String?   @map("user_agent")
+  ipAddress   String?   @map("ip_address")
+  trusted     Boolean   @default(false)
+  lastSeen    DateTime  @default(now()) @map("last_seen")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessions    Session[]
+
+  @@index([userId])
+  @@index([fingerprint])
+  @@map("device")
+}
+
+model EmailDomain {
+  id        String   @id @default(cuid())
+  domain    String   @unique
+  type      String // "allowlist" or "blocklist"
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([domain])
+  @@index([type])
+  @@map("email_domain_config")
+}
+
+model SAMLProvider {
+  id                 String   @id @default(cuid())
+  name               String   @unique
+  entityId           String   @unique @map("entity_id")
+  ssoUrl             String   @map("sso_url")
+  certificate        String
+  enabled            Boolean  @default(true)
+  emailAttribute     String   @default("email") @map("email_attribute")
+  firstNameAttribute String   @default("firstName") @map("first_name_attribute")
+  lastNameAttribute  String   @default("lastName") @map("last_name_attribute")
+  usernameAttribute  String   @default("username") @map("username_attribute")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@index([entityId])
+  @@index([enabled])
+  @@map("saml_provider")
+}
+
+model WebAuthnChallenge {
+  id        String   @id @default(cuid())
+  userId    String?  @map("user_id")
+  email     String?
+  type      String // "registration" or "authentication"
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([email])
+  @@index([expiresAt])
+  @@map("webauthn_challenge")
+}
+
+// OAuth Provider functionality
+model OAuthApplication {
+  id             String                   @id @default(cuid())
+  userId         String                   @map("user_id")
+  organizationId String                   @map("organization_id") // Reference to User Service
+  name           String
+  description    String?
+  clientId       String                   @unique @map("client_id")
+  clientSecret   String                   @map("client_secret")
+  redirectUris   String[]                 @map("redirect_uris")
+  scopes         String[]
+  enabled        Boolean                  @default(true)
+  createdAt      DateTime                 @default(now()) @map("created_at")
+  updatedAt      DateTime                 @updatedAt @map("updated_at")
+  organization   Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  authorizations OAuthAuthorization[]
+  codes          OAuthAuthorizationCode[]
+  tokens         OAuthToken[]
+  refreshTokens  OAuthRefreshToken[]
+
+  @@index([userId])
+  @@index([organizationId])
+  @@index([clientId])
+  @@map("oauth_application")
+}
+
+model OAuthAuthorization {
+  id            String                   @id @default(cuid())
+  userId        String                   @map("user_id")
+  applicationId String                   @map("application_id")
+  scopes        String[]
+  createdAt     DateTime                 @default(now()) @map("created_at")
+  user          User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application   OAuthApplication         @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  codes         OAuthAuthorizationCode[]
+  tokens        OAuthToken[]
+
+  @@unique([userId, applicationId])
+  @@index([userId])
+  @@index([applicationId])
+  @@map("oauth_authorization")
+}
+
+model OAuthAuthorizationCode {
+  id                  String              @id @default(cuid())
+  code                String              @unique
+  userId              String              @map("user_id")
+  applicationId       String              @map("application_id")
+  authorizationId     String?             @map("authorization_id")
+  redirectUri         String              @map("redirect_uri")
+  scopes              String[]
+  codeChallenge       String?             @map("code_challenge")
+  codeChallengeMethod String?             @map("code_challenge_method")
+  expiresAt           DateTime            @map("expires_at")
+  used                Boolean             @default(false)
+  usedAt              DateTime?           @map("used_at")
+  createdAt           DateTime            @default(now()) @map("created_at")
+  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application         OAuthApplication    @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  authorization       OAuthAuthorization? @relation(fields: [authorizationId], references: [id], onDelete: SetNull)
+
+  @@index([code])
+  @@index([userId, applicationId])
+  @@index([expiresAt])
+  @@map("oauth_authorization_code")
+}
+
+model OAuthToken {
+  id              String              @id @default(cuid())
+  token           String              @unique
+  tokenHash       String              @unique @map("token_hash")
+  userId          String              @map("user_id")
+  applicationId   String              @map("application_id")
+  authorizationId String?             @map("authorization_id")
+  scopes          String[]
+  expiresAt       DateTime            @map("expires_at")
+  createdAt       DateTime            @default(now()) @map("created_at")
+  lastUsedAt      DateTime?           @map("last_used_at")
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application     OAuthApplication    @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  authorization   OAuthAuthorization? @relation(fields: [authorizationId], references: [id], onDelete: SetNull)
+  refreshToken    OAuthRefreshToken?
+
+  @@index([tokenHash])
+  @@index([userId])
+  @@index([applicationId])
+  @@index([expiresAt])
+  @@map("oauth_token")
+}
+
+model OAuthRefreshToken {
+  id            String           @id @default(cuid())
+  token         String           @unique
+  tokenHash     String           @unique @map("token_hash")
+  accessTokenId String           @unique @map("access_token_id")
+  userId        String           @map("user_id")
+  applicationId String           @map("application_id")
+  expiresAt     DateTime?        @map("expires_at")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  revoked       Boolean          @default(false)
+  revokedAt     DateTime?        @map("revoked_at")
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application   OAuthApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  accessToken   OAuthToken       @relation(fields: [accessTokenId], references: [id], onDelete: Cascade)
+
+  @@index([tokenHash])
+  @@index([userId])
+  @@index([applicationId])
+  @@map("oauth_refresh_token")
+}

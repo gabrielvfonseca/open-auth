@@ -1,0 +1,28 @@
+{
+  "title": "Getting Started",
+  "pages": [
+    "index",
+    "installation",
+    "architecture",
+    "internals",
+    "contributing",
+    "---Features---",
+    "sessions",
+    "mfa",
+    "passkeys",
+    "security",
+    "database",
+    "---Configuration---",
+    "packages/open-auth",
+    "packages/domain-packages",
+    "---Frameworks---",
+    "frameworks/astro",
+    "frameworks/elysia",
+    "frameworks/express",
+    "frameworks/hono",
+    "frameworks/nextjs",
+    "frameworks/nuxt",
+    "frameworks/remix",
+    "frameworks/svelte"
+  ]
+}

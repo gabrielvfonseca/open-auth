@@ -1,0 +1,11 @@
+name: run-example
+command: bun run --filter examples/{{example_name}} dev
+description: Start an example application in development mode using Turborepo filter.
+arguments:
+  - name: example_name
+    description: The name of the example directory (e.g., hono, nextjs, elysia, expressjs, astro, svelte, nuxt, remix)
+    default: nextjs
+tags:
+  - examples
+  - dev
+  - bun

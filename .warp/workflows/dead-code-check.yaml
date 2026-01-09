@@ -1,0 +1,9 @@
+name: dead-code-check
+command: bun run check
+description: Run Knip to detect unused exports, dependencies, and dead code across the monorepo.
+tags:
+  - quality
+  - knip
+  - bun
+  - cleanup
+

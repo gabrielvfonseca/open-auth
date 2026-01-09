@@ -1,0 +1,19 @@
+# Windsurf Project Rules
+
+## Monorepo Context
+You are working in the Open-Auth monorepo. Use Bun for all operations.
+
+## Development Workflow
+1. **Cross-Package Changes**: When modifying a dependency in `packages/`, ensure you run `bun run build --filter=@open-auth/package-name` to propagate changes.
+2. **Standardization**: Follow the existing patterns in `packages/auth` and `packages/session` for new domain logic.
+3. **Consistency**: Always use Biome (`biome check .`) for linting and formatting.
+
+## IDE Integration
+- Use Cascade's "Flow" mode for complex refactoring across multiple workspace packages.
+- When adding new dependencies, add them to the specific package's `package.json` using `bun add <pkg> --cwd packages/<name>`.
+
+## Core Packages
+- `@open-auth/core`: Foundation utilities.
+- `open-auth`: Main entry point for developers.
+- `@open-auth/database`: Unified database client using Prisma.
+- `@open-auth/session`: Core session management logic.

@@ -1,0 +1,62 @@
+---
+title: Svelte
+description: Integrate open-auth with your SvelteKit application.
+---
+
+# Svelte Integration
+
+SvelteKit hooks represent the ideal place to handle authentication in a Svelte application.
+
+## Installation
+
+```bash
+bun add open-auth
+```
+
+## Hook Setup
+
+```typescript
+// src/hooks.server.ts
+import { auth } from 'open-auth';
+import type { Handle } from '@sveltejs/kit';
+
+export const handle: Handle = async ({ event, resolve }) => {
+	const sessionId = event.cookies.get(auth.session.cookieName);
+	if (!sessionId) {
+		event.locals.user = null;
+		event.locals.session = null;
+		return resolve(event);
+	}
+
+	const { session, user } = await auth.validateSessionToken(sessionId);
+	if (session) {
+		event.cookies.set(auth.session.cookieName, session.id, {
+			path: '/',
+			httpOnly: true,
+			sameSite: 'lax',
+			secure: import.meta.env.PROD,
+			expires: session.expiresAt
+		});
+		event.locals.session = session;
+		event.locals.user = user;
+	} else {
+		event.cookies.delete(auth.session.cookieName, { path: '/' });
+		event.locals.session = null;
+		event.locals.user = null;
+	}
+	return resolve(event);
+};
+```
+
+## Server Data
+
+```typescript
+// src/routes/+page.server.ts
+import type { PageServerLoad } from './$types';
+
+export const load: PageServerLoad = async (event) => {
+	return {
+		user: event.locals.user
+	};
+};
+```

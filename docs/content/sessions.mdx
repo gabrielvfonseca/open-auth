@@ -1,0 +1,53 @@
+---
+title: Session Management
+description: Detailed guide on how session lifecycle is handled in open-auth.
+---
+
+# Session Management
+
+open-auth provides a robust and secure session management system based on server-side sessions stored in your database.
+
+## How it Works
+
+1. **Token Generation**: When a user signs in, a cryptographically secure token is generated.
+2. **Hashing**: The token is hashed before being stored in the database as a session ID.
+3. **Storage**: The session record includes the `userId`, `expiresAt` timestamp, and security status.
+4. **Cookie**: The original token is sent to the client as a `HttpOnly`, `Secure`, and `SameSite: Lax` cookie.
+
+## API Usage
+
+### Retrieving a Session
+
+The primary way to get the current session is via `auth.getCurrentSession()`:
+
+```typescript
+const { session, user } = await auth.getCurrentSession();
+```
+
+### Validating a Token
+
+If you have a token (e.g., from a header), you can validate it manually:
+
+```typescript
+const { session, user } = await auth.validateSessionToken(token);
+```
+
+## Security Best Practices
+
+- **Short-lived Sessions**: Sessions are set to expire, but can be automatically extended if the user is active.
+- **CSRF Protection**: By using `SameSite: Lax` or `Strict` cookies.
+- **Session ID Hashing**: Even if the database is compromised, active session tokens cannot be retrieved because they are stored as hashes (SHA-256).
+
+## Invalidation
+
+You can invalidate a specific session by its ID:
+
+```typescript
+await auth.session.invalidateSession(sessionId);
+```
+
+Or invalidate all sessions for a user:
+
+```typescript
+await auth.session.invalidateUserSessions(userId);
+```

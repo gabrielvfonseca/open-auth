@@ -1,0 +1,32 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": [
+    "packages/*/src/index.ts",
+    "examples/*/src/index.ts",
+    "examples/*/app/root.tsx",
+    "examples/*/app.vue"
+  ],
+  "project": ["**/*.{ts,tsx,vue,svelte}"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**",
+    "**/examples/**",
+    "**/prisma.config.ts",
+    "**/generated/**"
+  ],
+  "ignoreDependencies": [
+    "@open-auth/tsconfig",
+    "bun-types",
+    "@types/node",
+    "drizzle-orm",
+    "@prisma/client",
+    "prisma"
+  ],
+  "workspaces": {
+    "packages/*": {
+      "entry": "src/index.ts"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "@open-auth/sso",
+  "version": "0.1.0",
+  "description": "Single Sign-On (SSO) service for Open-Auth, primarily focusing on SAML 2.0 integration.",
+  "keywords": [
+    "sso",
+    "saml",
+    "saml2",
+    "enterprise-auth",
+    "open-auth"
+  ],
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/sso#readme",
+  "bugs": {
+    "url": "https://github.com/gabrielvfonseca/open-auth/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "packages/sso"
+  },
+  "license": "MIT",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.0"
+  },
+  "packageManager": "bun@1.3.3",
+  "scripts": {
+    "build": "bun build.ts",
+    "test": "bun test --pass-with-no-tests",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "type-check": "tsc --noEmit",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "@open-auth/cache": "workspace:*",
+    "@open-auth/core": "workspace:*",
+    "saml2-js": "^4.0.2",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/saml2-js": "^3.0.4",
+    "typescript": "^5.9.3"
+  }
+}

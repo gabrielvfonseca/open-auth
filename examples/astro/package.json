@@ -1,0 +1,33 @@
+{
+  "name": "@open-auth/example-astro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open Auth example for Astro",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "examples/astro"
+  },
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/examples/astro#readme",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "type-check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/node": "^8.2.5",
+    "open-auth": "workspace:*",
+    "@open-auth/session": "workspace:*",
+    "astro": "^4.5.9"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.5.10",
+    "typescript": "^5.4.3"
+  }
+}

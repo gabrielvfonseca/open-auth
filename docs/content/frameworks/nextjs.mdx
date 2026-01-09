@@ -1,0 +1,58 @@
+---
+title: Next.js
+description: The premier way to use open-auth with Next.js App Router.
+---
+
+# Next.js Integration
+
+`open-auth` provides a seamless experience for Next.js developers, leveraging Server Actions and the App Router.
+
+## Installation
+
+```bash
+bun add open-auth
+```
+
+## Session Management
+
+The best way to retrieve the current session in Next.js is by using the `auth.getCurrentSession()` helper.
+
+```typescript
+// app/page.tsx
+import { auth } from 'open-auth';
+
+export default async function Page() {
+  const { session, user } = await auth.getCurrentSession();
+  
+  if (!session) {
+    return <p>Not logged in</p>;
+  }
+
+  return <p>Welcome, {user.username}</p>;
+}
+```
+
+## Server Actions
+
+Handling login in a Server Action:
+
+```typescript
+'use server';
+
+import { auth } from 'open-auth';
+import { cookies } from 'next/headers';
+
+export async function login(formData: FormData) {
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  const result = await auth.signInWithEmailPassword(email, password);
+
+  if (result.success) {
+    auth.session.setSessionTokenCookie(result.sessionToken, result.session.expiresAt);
+    return { success: true };
+  }
+
+  return { error: 'Invalid credentials' };
+}
+```

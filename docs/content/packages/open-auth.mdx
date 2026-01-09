@@ -1,0 +1,73 @@
+---
+title: open-auth Package
+description: Precise reference for the main open-auth client package.
+---
+
+# open-auth Package
+
+The `open-auth` package is the primary interface for your application. It orchestrates multiple domain-specific services to provide a unified authentication API.
+
+## Authentication API
+
+### `auth.signInWithEmailPassword(email, password, options?)`
+Performs a standard sign-in. It includes automatic risk assessment and rate limiting.
+
+**Parameters:**
+- `email`: `string`
+- `password`: `string`
+- `options`: 
+    - `rememberMe`: `boolean` (Sets session to 90 days instead of 30)
+    - `turnstileToken`: `string` (Required if risk assessment triggers it)
+    - `clientIP`: `string` (Optional, defaults to X-Forwarded-For)
+
+**Returns:** `Promise<SignInResult>`
+```typescript
+interface SignInResult {
+  success: boolean;
+  message?: string;
+  session?: Session;
+  sessionToken?: string;
+  requiresTurnstile?: boolean;
+}
+```
+
+### `auth.signUp(email, username, password, options?)`
+Registers a new user and creates an email/password account.
+
+**Parameters:**
+- `email`: `string`
+- `username`: `string`
+- `password`: `string`
+
+**Returns:** `Promise<SignUpResult>`
+```typescript
+interface SignUpResult {
+  success: boolean;
+  user?: User;
+  account?: Account;
+  session?: Session;
+  sessionToken?: string;
+  verification?: EmailVerification;
+}
+```
+
+## Session Management
+
+### `auth.getCurrentSession()`
+Retrieves the session from the `session` cookie and fetches the associated user. Uses **SHA-256 hashing** internally to validate the token.
+
+### `auth.validateSessionToken(token)`
+Validates a raw token string. Useful for non-cookie based authentication (e.g., Bearer tokens).
+
+## Internal Guardians
+
+Access internal services directly via:
+- `auth.guardian`: Rate limiting and risk logic.
+- `auth.mfa`: TOTP and recovery code management.
+- `auth.passkey`: WebAuthn registration and authentication.
+- `auth.passwordReset`: Full password reset orchestration.
+
+## Types
+
+`open-auth` exports all core types for use in your application:
+- `User`, `Account`, `Session`, `EmailVerification`, `SignInResult`, `SignUpResult`.

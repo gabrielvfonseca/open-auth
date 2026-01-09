@@ -1,0 +1,34 @@
+---
+title: Architecture
+description: Understanding the modular architecture of open-auth.
+---
+
+# Architecture
+
+open-auth is built as a modular monorepo, where each package handles a specific domain of the authentication lifecycle.
+
+## Domain Packages
+
+- **`open-auth` (Core Client)**: The high-level API you interact with in your application.
+- **`@open-auth/core`**: Common utilities, validation schemas, and shared logic.
+- **`@open-auth/database`**: Prisma client and database schema definitions.
+- **`@open-auth/session`**: Session lifecycle management and cookie handling.
+- **`@open-auth/email`**: Email provider integrations (AWS SES, Resend, etc.).
+- **`@open-auth/mfa`**: TOTP and multi-factor authentication logic.
+- **`@open-auth/passkey`**: WebAuthn and passkey registration/authentication.
+- **`@open-auth/guardian`**: Security features like rate limiting and account lockout.
+
+## Flow of Data
+
+```mermaid
+graph TD
+    App[Your Application] --> Client[open-auth Client]
+    Client --> Session[@open-auth/session]
+    Client --> Identity[@open-auth/identity]
+    Client --> Guardian[@open-auth/guardian]
+    Identity --> DB[@open-auth/database]
+    Session --> DB
+    Guardian --> DB
+```
+
+By separating concerns, each part of the system can be scaled, tested, and maintained independently while providing a unified interface for the developer.

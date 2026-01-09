@@ -1,0 +1,38 @@
+---
+title: Domain Packages
+description: Overview of individual packages within the open-auth ecosystem.
+---
+
+# Domain Packages
+
+`open-auth` is built on top of specialized packages. You can use these packages individually if you need a more granular implementation.
+
+## `@open-auth/core`
+The foundation of the monorepo. It contains shared types, encryption utilities, and the logger.
+- **Key Utility**: `encryption.ts` - Provides high-level wrappers for cryptographic operations.
+
+## `@open-auth/session`
+Handles the session lifecycle.
+- **Service**: `SessionService`
+- **Logic**: Implements the SHA-256 token hashing and database persistence.
+- **Cookie Helper**: Provides Next.js-optimized cookie management.
+
+## `@open-auth/guardian`
+The security layer.
+- **Features**: Rate limiting, account lockout, and Cloudflare Turnstile integration.
+- **Risk Assessment**: Analyzes login attempts for suspicious patterns.
+
+## `@open-auth/database`
+The data access layer.
+- **Client**: Exports a shared Prisma client.
+- **Schema**: Contains the source of truth for the database structure.
+
+## `@open-auth/passkey`
+Full implementation of WebAuthn.
+- **Standard**: Follows FIDO2/WebAuthn L2.
+- **Features**: Registration, authentication, and credential storage.
+
+---
+
+### Why use domain packages directly?
+The main `open-auth` package is a high-level orchestration layer. If you are building a custom auth flow that doesn't fit our standard patterns (e.g. specialized SSO or hardware-only flows), you can compose your own logic using these domain-specific packages.

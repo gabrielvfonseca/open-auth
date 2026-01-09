@@ -1,0 +1,44 @@
+---
+title: Database & Persistence
+description: How open-auth interacts with your data.
+---
+
+# Database & Persistence
+
+open-auth uses Prisma as its primary ORM, providing type-safety and support for multiple database engines.
+
+## Supported Databases
+
+- **PostgreSQL**: Highly recommended for production.
+- **MySQL / MariaDB**
+- **SQLite**: Great for development and small projects.
+- **SQL Server**
+
+## Schema
+
+The core schema includes tables for:
+- `User`: Basic account information.
+- `Session`: Active sessions and tokens.
+- `EmailVerification`: Tokens for email validation.
+- `PasswordReset`: Recovery tokens.
+- `TOTPDevice`: Registered MFA devices.
+- `Passkey`: WebAuthn credentials.
+
+## Customizing the Schema
+
+While open-auth provides a standard schema, you can easily extend the Prisma models to add custom fields to your `User` model.
+
+```prisma
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String?
+  // Your custom fields
+  bio       String?
+  avatarUrl String?
+}
+```
+
+## Data Privacy
+
+open-auth is designed with privacy in mind. Sensitive data like passwords are hashed using Argon2, and PII can be easily exported or deleted via our built-in identity workflows.

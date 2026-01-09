@@ -1,0 +1,68 @@
+{
+  "name": "@open-auth/oauth",
+  "version": "0.1.0",
+  "description": "OAuth 2.0 and OpenID Connect (OIDC) service for Open-Auth, enabling secure third-party authorization.",
+  "keywords": [
+    "oauth",
+    "oidc",
+    "authorization",
+    "open-auth"
+  ],
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/oauth#readme",
+  "bugs": {
+    "url": "https://github.com/gabrielvfonseca/open-auth/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "packages/oauth"
+  },
+  "license": "MIT",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./constants": {
+      "types": "./dist/src/constants.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.0"
+  },
+  "packageManager": "bun@1.3.3",
+  "scripts": {
+    "build": "bun build.ts",
+    "test": "bun test --pass-with-no-tests",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "type-check": "tsc --noEmit",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "^2.0.0",
+    "@open-auth/core": "workspace:*",
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
+    "arctic": "^3.7.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^20.0.0"
+  }
+}

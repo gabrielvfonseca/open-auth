@@ -1,0 +1,64 @@
+---
+title: Hono
+description: Integrate open-auth with your Hono application.
+---
+
+# Hono Integration
+
+Hono middleware makes it easy to handle `open-auth` sessions across any environment (Node.js, Bun, Cloudflare Workers).
+
+## Installation
+
+```bash
+bun add open-auth hono
+```
+
+## Middleware Setup
+
+```typescript
+import { Hono } from "hono";
+import { getCookie, setCookie, deleteCookie } from "hono/cookie";
+import { auth } from "open-auth";
+
+const app = new Hono();
+
+app.use("*", async (c, next) => {
+	const sessionId = getCookie(c, auth.session.cookieName);
+	if (!sessionId) {
+		c.set("user", null);
+		c.set("session", null);
+		return next();
+	}
+
+	const { session, user } = await auth.validateSessionToken(sessionId);
+	if (session) {
+		setCookie(c, auth.session.cookieName, session.id, {
+			httpOnly: true,
+			path: "/",
+			secure: process.env.NODE_ENV === "production",
+			sameSite: "lax",
+            expires: session.expiresAt
+		});
+		c.set("user", user);
+		c.set("session", session);
+	} else {
+		deleteCookie(c, auth.session.cookieName);
+		c.set("user", null);
+		c.set("session", null);
+	}
+	await next();
+});
+```
+
+## Context Types
+
+To get type safety for your context:
+
+```typescript
+type Variables = {
+  user: import("open-auth").User | null;
+  session: import("open-auth").Session | null;
+}
+
+const app = new Hono<{ Variables: Variables }>();
+```

@@ -1,0 +1,59 @@
+---
+title: Express
+description: Integrate open-auth with your ExpressJS application.
+---
+
+# Express Integration
+
+This guide demonstrates how to integrate `open-auth` into an Express application.
+
+## Installation
+
+```bash
+bun add open-auth express cookie-parser
+```
+
+## Middleware Implementation
+
+```typescript
+import express from "express";
+import cookieParser from "cookie-parser";
+import { auth } from "open-auth";
+
+const app = express();
+app.use(cookieParser());
+
+app.use(async (req, res, next) => {
+	const sessionId = req.cookies[auth.session.cookieName];
+	if (!sessionId) {
+		req.user = null;
+		req.session = null;
+		return next();
+	}
+
+	const { session, user } = await auth.validateSessionToken(sessionId);
+	if (session) {
+		res.cookie(auth.session.cookieName, session.id, {
+			httpOnly: true,
+			path: "/",
+			secure: process.env.NODE_ENV === "production",
+			sameSite: "lax",
+			expires: session.expiresAt,
+		});
+		req.user = user;
+		req.session = session;
+	} else {
+        res.clearCookie(auth.session.cookieName);
+		req.user = null;
+		req.session = null;
+	}
+	next();
+});
+
+app.get("/me", (req, res) => {
+	if (!req.user) {
+		return res.status(401).json({ error: "Unauthorized" });
+	}
+	res.json({ user: req.user });
+});
+```

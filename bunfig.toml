@@ -1,0 +1,4 @@
+[test]
+exclude = ["node_modules/", "e2e/", "**/e2e/**", "**/node_modules/**"]
+coverageThreshold = 0
+passWithNoTests = true

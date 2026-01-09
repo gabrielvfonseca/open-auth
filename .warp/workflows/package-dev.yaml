@@ -1,0 +1,13 @@
+name: package-dev
+command: bun run --filter @open-auth/{{package_name}} dev
+description: Start development mode for a specific package using Turborepo filter.
+arguments:
+  - name: package_name
+    description: The package name without @open-auth/ prefix (e.g., auth, session, passkey, mfa, oauth)
+    default: auth
+tags:
+  - packages
+  - dev
+  - bun
+  - turbo
+

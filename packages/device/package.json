@@ -1,0 +1,58 @@
+{
+  "name": "@open-auth/device",
+  "version": "0.1.0",
+  "description": "Device identification and fingerprinting service for Open-Auth, assisting in threat detection and session trust.",
+  "keywords": [
+    "device",
+    "fingerprinting",
+    "security",
+    "trust",
+    "open-auth"
+  ],
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/device#readme",
+  "bugs": {
+    "url": "https://github.com/gabrielvfonseca/open-auth/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "packages/device"
+  },
+  "license": "MIT",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.0"
+  },
+  "packageManager": "bun@1.3.3",
+  "scripts": {
+    "build": "bun build.ts",
+    "test": "bun test --pass-with-no-tests",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "type-check": "tsc --noEmit",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "@open-auth/core": "workspace:*",
+
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^20.0.0"
+  }
+}

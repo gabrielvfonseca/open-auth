@@ -1,0 +1,32 @@
+{
+  "name": "@open-auth/example-expressjs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open Auth example for Express.js",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "examples/expressjs"
+  },
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/examples/expressjs#readme",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "open-auth": "workspace:*",
+    "@open-auth/session": "workspace:*",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.7",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

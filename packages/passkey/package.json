@@ -1,0 +1,73 @@
+{
+  "name": "@open-auth/passkey",
+  "version": "0.1.0",
+  "description": "WebAuthn and Passkey service for Open-Auth, providing secure, passwordless biometric or hardware-based authentication.",
+  "keywords": [
+    "passkey",
+    "webauthn",
+    "fido2",
+    "biometrics",
+    "open-auth"
+  ],
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/passkey#readme",
+  "bugs": {
+    "url": "https://github.com/gabrielvfonseca/open-auth/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "packages/passkey"
+  },
+  "license": "MIT",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.0"
+  },
+  "packageManager": "bun@1.3.3",
+  "scripts": {
+    "build": "bun build.ts",
+    "test": "bun test --pass-with-no-tests",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "type-check": "tsc --noEmit",
+    "dev": "tsc -w"
+  },
+  "dependencies": {
+    "@open-auth/core": "workspace:*",
+
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
+    "@oslojs/webauthn": "^1.0.0",
+    "@pilcrowjs/object-parser": "^0.0.4",
+    "next": "14.2.14",
+    "server-only": "^0.0.1",
+    "@t3-oss/env-core": "^0.11.1",
+    "zod": "^3.25.28"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^20.0.0"
+  }
+}

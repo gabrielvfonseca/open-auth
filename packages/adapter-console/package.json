@@ -1,0 +1,39 @@
+{
+  "name": "@open-auth/adapter-console",
+  "version": "0.1.0",
+  "description": "Console logging email adapter for Open Auth development",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "packages/adapter-console"
+  },
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/adapter-console#readme",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "bun build.ts",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@open-auth/core": "workspace:*",
+    "@open-auth/tsconfig": "workspace:*",
+    "@types/node": "^25.0.3",
+    "consola": "^3.4.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "consola": "^3.4.2"
+  }
+}

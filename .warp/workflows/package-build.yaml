@@ -1,0 +1,13 @@
+name: package-build
+command: bun run build --filter @open-auth/{{package_name}}
+description: Build a specific package and its dependencies using Turborepo filter.
+arguments:
+  - name: package_name
+    description: The package name without @open-auth/ prefix (e.g., auth, session, passkey, mfa, oauth)
+    default: auth
+tags:
+  - packages
+  - build
+  - bun
+  - turbo
+

@@ -1,0 +1,39 @@
+{
+  "name": "@open-auth/react",
+  "version": "0.1.0",
+  "description": "React hooks and components for Open Auth",
+  "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/react#readme",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "bun build.ts",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@open-auth/core": "workspace:*",
+    "@open-auth/tsconfig": "workspace:*",
+    "react": "^18.2.0",
+    "@types/react": "^18.2.0",
+    "typescript": "^5.9.3"
+  }
+}
