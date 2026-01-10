@@ -1,45 +1,73 @@
 # Open-Auth
 
-Simple JS/TS authentication library supporting JWT, sessions, and OAuth.
+A modern, high-level authentication platform for JS/TS applications. Open-Auth provides a comprehensive suite of tools for account management, secure authentication flows, and developer-friendly integration via a modular monorepo architecture.
+
+## Packages
+
+The platform is divided into several specialized packages, with `open-auth` serving as the primary high-level orchestrator.
+
+- **[open-auth](packages/auth)**: The main entry point, orchestrating user management, verification, and authentication flows.
+- **[@open-auth/core](packages/core)**: Essential utilities, validation logic, and shared types.
+- **[@open-auth/session](packages/session)**: Secure session management and state persistence.
+- **[@open-auth/guardian](packages/guardian)**: Security features including rate limiting, risk detection, and bot protection.
+- **[@open-auth/mfa](packages/mfa)**: Multi-factor authentication support (TOTP, Recovery Codes).
+- **[@open-auth/passkey](packages/passkey)**: Passwordless authentication with WebAuthn/Passkeys.
+- **[@open-auth/oauth](packages/oauth)** & **[sso](packages/sso)**: Integration with OAuth providers and SAML.
 
 ## Features
 
-- **JWT Utilities**: Easy signing and verification of JSON Web Tokens.
-- **Monorepo Structure**: Managed with Turborepo and pnpm workspaces.
-- **Next.js Example**: A playground for testing auth flows.
-- **Docusaurus Docs**: Comprehensive documentation.
+- 🔐 **Full Auth Lifecycle**: Sign-up, Sign-in, Sign-out, and Account Deletion.
+- 📧 **Verification**: Integrated email verification and magic link support.
+- 🛡️ **Security First**: Built-in account lockout, risk-based assessment, and rate limiting.
+- 📱 **Modern Auth**: First-class support for Passkeys and Multi-Factor Authentication.
+- 🤝 **Integrations**: Standalone adapters for Prisma, Drizzle, and more.
+- 🏗️ **Monorepo Architecture**: Clean separation of concerns managed with Turborepo and Bun.
 
 ## Installation
 
 ```bash
-pnpm install @open-auth/core
+bun add open-auth
 ```
 
-## Usage
+## Quick Start
 
 ```typescript
-import { signToken, verifyToken } from '@open-auth/core';
+import { createAuthClient } from 'open-auth';
 
-const secret = 'your-secret';
-const token = signToken({ sub: 'user-1' }, secret);
-const decoded = verifyToken(token, secret);
+const auth = createAuthClient({
+  database: myDatabaseAdapter,
+  session: {
+    cookieName: "auth_session",
+  },
+  // ... other configuration
+});
+
+// Use the orchestrated services
+const { session, user } = await auth.getCurrentSession();
 ```
+
+## Examples
+
+Explore our integration examples to see Open-Auth in action:
+
+- [Next.js](examples/nextjs)
+- [Astro](examples/astro)
+- [Remix](examples/remix)
+- [SvelteKit](examples/svelte)
+- [Hono](examples/hono)
+- [Elysia](examples/elysia)
+- [Express](examples/expressjs)
+- [Nuxt](examples/nuxt)
 
 ## Development
 
 ```bash
-pnpm install
-pnpm build
-pnpm dev
+bun install
+bun run build
+bun run test
 ```
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature-core`.
-3. Make your changes and commit them.
-4. Push to your branch and create a pull request.
 
 ## License
 
 MIT
+
