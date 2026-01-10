@@ -14,7 +14,10 @@
     "**/.next/**",
     "**/examples/**",
     "**/prisma.config.ts",
-    "**/generated/**"
+    "**/generated/**",
+    "docs/**",
+    "e2e/**",
+    "**/*.d.ts"
   ],
   "ignoreDependencies": [
     "@open-auth/tsconfig",
@@ -22,11 +25,20 @@
     "@types/node",
     "drizzle-orm",
     "@prisma/client",
-    "prisma"
+    "prisma",
+    "@open-auth/core"
   ],
   "workspaces": {
     "packages/*": {
-      "entry": "src/index.ts"
+      "entry": "src/index.ts",
+      "ignore": ["src/**/*.test.ts"],
+      "ignoreMembers": [
+        "ActionWrapperService",
+        "withErrorHandling",
+        "withErrorHandlingCustom",
+        "createAuthClient",
+        "AuthProviderProps"
+      ]
     }
   }
 }

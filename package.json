@@ -22,8 +22,8 @@
     "lint:ci": "biome ci .",
     "format": "biome format --write .",
     "test": "turbo run test",
-    "check": "knip",
-    "knip": "DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy knip",
+    "check": "bun run knip",
+    "knip": "DATABASE_URL=postgresql://dummy:dummy@localhost:5432/dummy knip --no-config-hints",
     "spell": "cspell \"**\"",
     "spell:fix": "cspell \"**\" --fix",
     "type-check": "turbo run type-check",
@@ -38,11 +38,12 @@
   "devDependencies": {
     "@biomejs/biome": "latest",
     "@changesets/cli": "^2.29.8",
+    "@prisma/client": "^6.1.0",
     "bumpp": "latest",
     "cspell": "latest",
     "husky": "latest",
     "knip": "latest",
-    "prisma": "^7.2.0",
+    "prisma": "^6.1.0",
     "turbo": "latest",
     "typescript": "latest",
     "ultracite": "latest"
@@ -58,8 +59,8 @@
   },
   "workspaces": [
     "packages/*",
-    "apps/*",
-    "internal/*"
+    "internal/*",
+    "examples/*"
   ],
   "dependencies": {
     "consola": "^3.4.2"
