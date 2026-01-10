@@ -1,10 +1,14 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { auth } from "open-auth";
+import { auth } from "../lib/auth";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get("Cookie");
-  const sessionId = auth.session.readSessionToken(cookieHeader ?? "");
+  const sessionId = (cookieHeader ?? "")
+    .split(";")
+    .find((c) => c.trim().startsWith(`${auth.session.cookieName}=`))
+    ?.split("=")[1];
+
   if (!sessionId) {
     return json({ user: null });
   }

@@ -1,8 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { auth } from "open-auth";
 import { z } from "zod";
+import { auth } from "@/lib/auth";
 
 const resetPasswordSchema = z
   .object({

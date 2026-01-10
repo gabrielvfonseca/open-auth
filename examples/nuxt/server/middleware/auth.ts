@@ -1,4 +1,4 @@
-import { auth } from "open-auth";
+// auth is auto-imported from server/utils/auth.ts
 
 declare module "h3" {
   interface H3EventContext {

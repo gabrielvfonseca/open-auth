@@ -20,13 +20,18 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "open-auth": "workspace:*",
+    "@node-rs/argon2": "^2.0.2",
+    "@open-auth/adapter-prisma": "workspace:*",
+    "@open-auth/core": "workspace:*",
     "@open-auth/session": "workspace:*",
     "nuxt": "^3.11.1",
+    "open-auth": "workspace:*",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@prisma/client": "^6.1.0",
+    "prisma": "^6.1.0",
     "typescript": "^5.4.3"
   }
 }

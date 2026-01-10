@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "open-auth";
+import { auth } from "@/lib/auth";
 
 export interface SessionsState {
   error?: string;

@@ -2,7 +2,7 @@ import * as oauth from "@open-auth/oauth";
 import { OAuth2RequestError } from "arctic";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { auth } from "open-auth";
+import { auth } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 

@@ -1,8 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { auth } from "open-auth";
 import { z } from "zod";
+import { auth } from "@/lib/auth";
 
 const deleteAccountSchema = z.object({
   password: z.string().min(1, "Password is required to confirm deletion"),

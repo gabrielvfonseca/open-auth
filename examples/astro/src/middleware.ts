@@ -1,5 +1,5 @@
 import { defineMiddleware } from "astro/middleware";
-import { auth } from "open-auth";
+import { auth } from "./lib/auth";
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const sessionId = context.cookies.get(auth.session.cookieName)?.value;

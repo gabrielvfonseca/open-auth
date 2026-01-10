@@ -18,20 +18,21 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "open-auth": "workspace:*",
+    "@node-rs/argon2": "^2.0.2",
+    "@open-auth/adapter-prisma": "workspace:*",
     "@open-auth/core": "workspace:*",
     "@open-auth/guardian": "workspace:*",
     "@open-auth/magic": "workspace:*",
     "@open-auth/mfa": "workspace:*",
+    "@open-auth/oauth": "workspace:*",
     "@open-auth/passkey": "workspace:*",
     "@open-auth/session": "workspace:*",
-    "@open-auth/oauth": "workspace:*",
     "@open-auth/sso": "workspace:*",
-    "arctic": "^3.7.0",
-    "@node-rs/argon2": "^2.0.0",
     "@oslojs/otp": "^1.1.0",
+    "arctic": "^3.7.0",
     "clsx": "^2.1.0",
     "next": "14.2.14",
+    "open-auth": "workspace:*",
     "qrcode": "^1.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@oslojs/crypto": "^1.0.1",
     "@oslojs/encoding": "^1.1.0",
+    "@prisma/client": "^6.1.0",
     "@types/node": "^20.0.0",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^18.2.0",
@@ -50,6 +52,7 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.14",
     "postcss": "^8.4.38",
+    "prisma": "^6.1.0",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.0.0"
   }

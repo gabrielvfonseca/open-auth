@@ -1,6 +1,6 @@
 import cookieParser from "cookie-parser";
 import express from "express";
-import { auth } from "open-auth";
+import { auth } from "./lib/auth";
 
 const app = express();
 const port = 3000;

@@ -1,8 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { auth } from "open-auth";
 import { z } from "zod";
+import { auth } from "@/lib/auth";
 
 const signUpSchema = z.object({
   email: z.string().email("Please enter a valid email"),

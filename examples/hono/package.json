@@ -18,12 +18,15 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "open-auth": "workspace:*",
+    "@node-rs/argon2": "^2.0.2",
     "@open-auth/session": "workspace:*",
-    "hono": "^4.0.0"
+    "hono": "^4.0.0",
+    "open-auth": "workspace:*"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@prisma/client": "^6.1.0",
+    "bun-types": "latest",
+    "prisma": "^6.1.0",
     "typescript": "^5.0.0"
   }
 }

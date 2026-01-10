@@ -1,8 +1,8 @@
 "use server";
 
 import { decodeBase32, encodeBase32UpperCaseNoPadding } from "@oslojs/encoding";
-import { auth } from "open-auth";
 import QRCode from "qrcode";
+import { auth } from "@/lib/auth";
 
 export interface TOTPSetupState {
   error?: string;

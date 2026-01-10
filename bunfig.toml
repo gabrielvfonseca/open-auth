@@ -1,4 +1,4 @@
 [test]
-exclude = ["node_modules/", "e2e/", "**/e2e/**", "**/node_modules/**"]
+exclude = ["node_modules", "e2e/**", "**/e2e/tests/*.spec.ts"]
 coverageThreshold = 0
 passWithNoTests = true

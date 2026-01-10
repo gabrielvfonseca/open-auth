@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { auth } from "open-auth";
 import type { ReactNode } from "react";
+import { auth } from "@/lib/auth";
 
 export default async function SettingsLayout({
   children,

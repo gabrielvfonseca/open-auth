@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { auth } from "open-auth";
+import { auth } from "@/lib/auth";
 
 export interface VerifyEmailState {
   error?: string;

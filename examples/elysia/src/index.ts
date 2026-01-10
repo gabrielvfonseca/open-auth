@@ -1,12 +1,13 @@
 import { Elysia } from "elysia";
-import { auth } from "open-auth";
+import { auth } from "./lib/auth";
 
 const app = new Elysia()
   .derive(async ({ cookie: { session_id } }) => {
-    if (!session_id?.value) {
+    const token = session_id.value;
+    if (!token || typeof token !== "string") {
       return { user: null, session: null };
     }
-    const { user, session } = await auth.validateSessionToken(session_id.value);
+    const { user, session } = await auth.validateSessionToken(token);
     if (!session) {
       return { user: null, session: null };
     }

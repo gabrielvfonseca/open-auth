@@ -22,12 +22,15 @@
   },
   "dependencies": {
     "@astrojs/node": "^8.2.5",
-    "open-auth": "workspace:*",
+    "@node-rs/argon2": "^2.0.2",
     "@open-auth/session": "workspace:*",
-    "astro": "^4.5.9"
+    "astro": "^4.5.9",
+    "open-auth": "workspace:*"
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.10",
+    "@prisma/client": "^6.1.0",
+    "prisma": "^6.1.0",
     "typescript": "^5.4.3"
   }
 }

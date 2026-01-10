@@ -1,8 +1,14 @@
 import { Hono } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
-import { auth } from "open-auth";
+import type { Session, User } from "open-auth";
+import { auth } from "./lib/auth";
 
-const app = new Hono();
+const app = new Hono<{
+  Variables: {
+    user: User | null;
+    session: Session | null;
+  };
+}>();
 
 // Middleware to validate session
 app.use("*", async (c, next) => {
