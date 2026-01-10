@@ -12,6 +12,7 @@ import type { AuthContextValue, Session, User } from "./types";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+/** @public */
 export interface AuthProviderProps {
   children: ReactNode;
   /** Optional: URL to fetch session from. Defaults to /api/auth/session */

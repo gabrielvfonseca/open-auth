@@ -1,6 +1,7 @@
 import "server-only";
 import { handleActionError, shouldRethrow } from "@open-auth/core";
 
+/** @public */
 export class ActionWrapperService {
   /**
    * Wrap a server action with error handling
@@ -77,7 +78,9 @@ export class ActionWrapperService {
 
 export const actionWrapperService = new ActionWrapperService();
 
+/** @public */
 export const withErrorHandling =
   actionWrapperService.withErrorHandling.bind(actionWrapperService);
+/** @public */
 export const withErrorHandlingCustom =
   actionWrapperService.withErrorHandlingCustom.bind(actionWrapperService);

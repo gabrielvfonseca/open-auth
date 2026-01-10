@@ -50,6 +50,10 @@ export interface SessionConfig {
 export class SessionService {
   private readonly config: Required<SessionConfig>;
 
+  public get cookieName(): string {
+    return this.config.cookieName;
+  }
+
   constructor(
     private readonly adapter: DatabaseAdapter,
     config: SessionConfig = {}
@@ -64,6 +68,10 @@ export class SessionService {
       sameSite: config.sameSite ?? "lax",
       domain: config.domain ?? "",
     };
+  }
+
+  public async setSessionAs2FAVerified(sessionId: string): Promise<void> {
+    await this.adapter.updateSession(sessionId, { twoFactorVerified: true });
   }
 
   public async validateSessionToken(

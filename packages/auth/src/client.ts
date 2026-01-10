@@ -518,6 +518,7 @@ export class AuthClient {
 /**
  * Create an AuthClient with the provided configuration
  */
+/** @public */
 export function createAuthClient(config: AuthConfig): AuthClient {
   return new AuthClient(config);
 }
