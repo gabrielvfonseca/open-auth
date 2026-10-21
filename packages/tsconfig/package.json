@@ -7,14 +7,14 @@
     "config",
     "open-auth"
   ],
-  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/internal/tsconfig#readme",
+  "homepage": "https://github.com/gabrielvfonseca/open-auth/tree/main/packages/tsconfig#readme",
   "bugs": {
     "url": "https://github.com/gabrielvfonseca/open-auth/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gabrielvfonseca/open-auth.git",
-    "directory": "internal/tsconfig"
+    "directory": "packages/tsconfig"
   },
   "license": "MIT",
   "author": "Gabriel Fonseca <https://github.com/gabrielvfonseca>",

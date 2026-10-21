@@ -22,9 +22,10 @@
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "!dist/.tsbuildinfo"
   ],
   "sideEffects": false,
   "publishConfig": {
@@ -49,7 +50,8 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "@types/node": "^20.0.0"
+    "@open-auth/tsconfig": "workspace:*",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.9.3"
   }
 }

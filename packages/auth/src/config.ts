@@ -1,5 +1,6 @@
 import type { DatabaseAdapter, User } from "@open-auth/core";
 import type { Session } from "@open-auth/session";
+import type { SsoConfig as SsoServiceConfig } from "@open-auth/sso";
 
 // ====================
 // Session Configuration
@@ -217,7 +218,7 @@ export interface SamlConfig {
   };
 }
 
-export interface SsoConfig {
+export interface SsoConfig extends SsoServiceConfig {
   /** SAML configuration */
   saml?: SamlConfig;
 }

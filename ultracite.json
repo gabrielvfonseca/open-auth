@@ -1,0 +1,59 @@
+{
+  "$schema": "https://www.ultracite.ai/schema.json",
+  "linter": "biome",
+  "frameworks": ["react", "next"],
+  "integrations": ["husky"],
+  "presets": {
+    "biome": [
+      "ultracite/biome/core",
+      "ultracite/biome/react",
+      "ultracite/biome/next"
+    ]
+  },
+  "rules": {
+    "a11y": {
+      "noSvgWithoutTitle": "off",
+      "useButtonType": "off",
+      "noLabelWithoutControl": "off"
+    },
+    "style": {
+      "useConsistentMemberAccessibility": "off",
+      "noNonNullAssertion": "off",
+      "noParameterProperties": "off",
+      "noNestedTernary": "off",
+      "noNamespace": "off",
+      "useFilenamingConvention": "off",
+      "noEnum": "off",
+      "noExportedImports": "off"
+    },
+    "suspicious": {
+      "useAwait": "off",
+      "noExplicitAny": "off",
+      "noUnknownAtRules": "off",
+      "noAssignInExpressions": "off",
+      "noAlert": "off",
+      "noArrayIndexKey": "off",
+      "noEvolvingTypes": "off",
+      "noImplicitAnyLet": "off",
+      "useGuardForIn": "off"
+    },
+    "performance": {
+      "noNamespaceImport": "off",
+      "noBarrelFile": "off",
+      "noImgElement": "off",
+      "useTopLevelRegex": "off"
+    },
+    "correctness": {
+      "useImageSize": "off",
+      "useExhaustiveDependencies": "off",
+      "noUnusedVariables": "off",
+      "noUnusedPrivateClassMembers": "off",
+      "noUndeclaredVariables": "off",
+      "noUnreachable": "off",
+      "useHookAtTopLevel": "off"
+    },
+    "complexity": {
+      "noExcessiveCognitiveComplexity": "off"
+    }
+  }
+}

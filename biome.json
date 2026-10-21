@@ -1,9 +1,34 @@
 {
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
   "extends": [
     "ultracite/biome/core",
     "ultracite/biome/react",
     "ultracite/biome/next"
   ],
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "!**/dist",
+      "!**/build",
+      "!**/.next",
+      "!**/.nuxt",
+      "!**/.svelte-kit",
+      "!**/.astro",
+      "!**/.output",
+      "!**/.turbo",
+      "!**/coverage",
+      "!**/node_modules",
+      "!**/docs/.source",
+      "!**/docs/.next",
+      "!**/packages/*/src/**/*.d.ts"
+    ]
+  },
   "linter": {
     "enabled": true,
     "rules": {

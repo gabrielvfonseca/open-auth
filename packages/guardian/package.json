@@ -23,9 +23,10 @@
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "!dist/.tsbuildinfo"
   ],
   "sideEffects": false,
   "publishConfig": {
@@ -46,7 +47,6 @@
   },
   "dependencies": {
     "@open-auth/core": "workspace:*",
-
     "@open-auth/session": "workspace:*",
     "@oslojs/crypto": "^1.0.1",
     "@oslojs/encoding": "^1.1.0",
@@ -57,7 +57,8 @@
     "zod": "^3.25.28"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "@types/node": "^20.0.0"
+    "@open-auth/tsconfig": "workspace:*",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.9.3"
   }
 }

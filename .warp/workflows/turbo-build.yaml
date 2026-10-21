@@ -1,8 +1,0 @@
-name: build-all
-command: bun run build
-description: Build all packages in the monorepo using Turborepo. Dependencies are automatically resolved and cached.
-tags:
-  - turbo
-  - build
-  - monorepo
-  - bun

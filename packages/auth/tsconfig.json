@@ -1,21 +1,55 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@open-auth/tsconfig/base.json",
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": false,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "declaration": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../device"
+    },
+    {
+      "path": "../guardian"
+    },
+    {
+      "path": "../magic"
+    },
+    {
+      "path": "../mfa"
+    },
+    {
+      "path": "../oauth"
+    },
+    {
+      "path": "../passkey"
+    },
+    {
+      "path": "../password"
+    },
+    {
+      "path": "../recovery"
+    },
+    {
+      "path": "../session"
+    },
+    {
+      "path": "../sso"
+    },
+    {
+      "path": "../token"
+    },
+    {
+      "path": "../verification"
+    },
+    {
+      "path": "../webhook"
+    }
+  ]
 }

@@ -1,14 +1,99 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "."
-  },
-  "exclude": ["node_modules", "dist"],
-  "include": ["packages/**/*"]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/adapter-console"
+    },
+    {
+      "path": "./packages/adapter-drizzle"
+    },
+    {
+      "path": "./packages/adapter-memory"
+    },
+    {
+      "path": "./packages/adapter-prisma"
+    },
+    {
+      "path": "./packages/adapter-resend"
+    },
+    {
+      "path": "./packages/adapter-sendgrid"
+    },
+    {
+      "path": "./packages/audit"
+    },
+    {
+      "path": "./packages/auth"
+    },
+    {
+      "path": "./packages/cache"
+    },
+    {
+      "path": "./packages/contract"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/device"
+    },
+    {
+      "path": "./packages/email"
+    },
+    {
+      "path": "./packages/guardian"
+    },
+    {
+      "path": "./packages/idempotency"
+    },
+    {
+      "path": "./packages/identity"
+    },
+    {
+      "path": "./packages/magic"
+    },
+    {
+      "path": "./packages/mfa"
+    },
+    {
+      "path": "./packages/oauth"
+    },
+    {
+      "path": "./packages/oauth-providers"
+    },
+    {
+      "path": "./packages/passkey"
+    },
+    {
+      "path": "./packages/password"
+    },
+    {
+      "path": "./packages/react"
+    },
+    {
+      "path": "./packages/recovery"
+    },
+    {
+      "path": "./packages/session"
+    },
+    {
+      "path": "./packages/session-store"
+    },
+    {
+      "path": "./packages/sso"
+    },
+    {
+      "path": "./packages/telemetry"
+    },
+    {
+      "path": "./packages/token"
+    },
+    {
+      "path": "./packages/verification"
+    },
+    {
+      "path": "./packages/webhook"
+    }
+  ]
 }

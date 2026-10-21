@@ -27,7 +27,7 @@
     "spell": "cspell \"**\"",
     "spell:fix": "cspell \"**\" --fix",
     "type-check": "turbo run type-check",
-    "coverage": "bun test --coverage --pass-with-no-tests ./packages ./internal",
+    "coverage": "bun test --coverage --pass-with-no-tests ./packages",
     "prepare": "husky",
     "changeset": "changeset",
     "version": "changeset version",
@@ -59,7 +59,6 @@
   },
   "workspaces": [
     "packages/*",
-    "internal/*",
     "examples/*"
   ],
   "dependencies": {

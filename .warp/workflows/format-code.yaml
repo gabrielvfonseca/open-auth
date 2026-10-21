@@ -1,9 +1,0 @@
-name: format-code
-command: bun run format
-description: Format all code in the monorepo using Biome.
-tags:
-  - formatting
-  - biome
-  - bun
-  - quality
-

@@ -1,14 +1,11 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@open-auth/tsconfig/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "types": ["bun"],
-    "lib": ["esnext"],
-    "typeRoots": ["./node_modules/@types", "../../node_modules/@types"]
+    "outDir": "dist",
+    "rootDir": "src",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
